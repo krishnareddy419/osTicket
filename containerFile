@@ -1,0 +1,17 @@
+sudo docker run -d -name ost-man-db \
+-p 3306:3306 \
+--mount src=ost-man-vol,dst=/var/lib/mysql \
+-e MYSQL_ROOT_PASSWORD ="ADMIN123"\
+-e MYSQL_DATABASE ="osticket"\
+-e MYSQL_USER = "ost_user"\
+-e MYSQL_PASSWORD="ost_password"\
+mysql:5.5.62
+
+sudo docker run -d -name ost-man-app \
+-p 8084:80 \
+--mount src=ost-man-arch,dst=/var/www/html \
+-e DB_NAME ="osticket"\
+-e DB_USER ="ost_user"\
+-e DB_PASSWORD = "ost_password"\
+-e DB_HOST="ost-man-db"\
+osticket:1.0
